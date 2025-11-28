@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-CLI runner for Hybrid RAG+SQL Agent
-Usage: python run_agent_hybrid.py --batch sample_questions_hybrid_eval.jsonl --out outputs_hybrid.jsonl
-"""
-
 import click
 import json
 from pathlib import Path
@@ -20,27 +14,19 @@ console = Console()
 @click.option('--docs-dir', default='docs', help='Documents directory')
 @click.option('--db-path', default='data/northwind.sqlite', help='SQLite database path')
 def main(batch, out, docs_dir, db_path):
-    """Run hybrid agent on batch questions"""
-    
     console.print(f"\n[bold cyan]Retail Analytics Copilot - Hybrid Agent[/bold cyan]")
     console.print(f"Input: {batch}")
     console.print(f"Output: {out}")
     console.print(f"Docs: {docs_dir}, DB: {db_path}\n")
-    
-    # Initialize agent
     console.print("[yellow]Initializing agent...[/yellow]")
     agent = HybridAgent(docs_dir=docs_dir, db_path=db_path)
     console.print("[green]✓ Agent ready[/green]\n")
-    
-    # Load questions
     questions = []
     with open(batch, 'r') as f:
         for line in f:
             questions.append(json.loads(line.strip()))
     
     console.print(f"Loaded {len(questions)} questions\n")
-    
-    # Process each question
     results = []
     
     with Progress(
@@ -59,10 +45,7 @@ def main(batch, out, docs_dir, db_path):
             progress.update(task, description=f"[cyan]Processing: {q_id}")
             
             try:
-                # Run agent
                 result = agent.run(question=question, format_hint=format_hint)
-                
-                # Format output
                 output = {
                     "id": q_id,
                     "final_answer": result["final_answer"],
@@ -89,14 +72,12 @@ def main(batch, out, docs_dir, db_path):
             
             progress.advance(task)
     
-    # Write results
     with open(out, 'w') as f:
         for result in results:
             f.write(json.dumps(result) + '\n')
     
     console.print(f"\n[bold green]✓ Complete! Results written to {out}[/bold green]")
     
-    # Summary
     success_count = sum(1 for r in results if r["final_answer"] is not None)
     console.print(f"\nSuccess rate: {success_count}/{len(results)} ({success_count/len(results)*100:.1f}%)")
 

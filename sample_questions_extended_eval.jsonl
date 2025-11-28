@@ -8,3 +8,8 @@
 {"id":"sql_supplier_revenue_1997","question":"What was the total revenue generated in 1997 by products from the supplier 'Exotic Liquids'?","format_hint":"float"}
 {"id":"sql_order_count_july_1997","question":"How many distinct orders were placed in July 1997?","format_hint":"int"}
 {"id":"hybrid_no_data_test","question":"What was the total revenue for 'Grains/Cereals' in October 1997?","format_hint":"float"}
+{"id":"sql_avg_unitprice_dairy","question":"What is the average UnitPrice for products in the 'Dairy Products' category? Return a float rounded to 2 decimals.","format_hint":"float"}
+{"id":"rag_marketing_theme_nov_1997","question":"According to the marketing calendar, what is the theme of the campaign running in November 1997?","format_hint":"str"}
+{"id":"hybrid_revenue_germany_summer_1997","question":"What was the total revenue generated from customers in 'Germany' during the 'Summer Beverages 1997' campaign? Return a float rounded to 2 decimals.","format_hint":"float"}
+{"id":"sql_suppliers_confections","question":"List the CompanyName of all suppliers who supply products in the 'Confections' category. Return list[str].","format_hint":"list[str]"}
+{"id":"rag_kpi_gross_margin_definition","question":"What is the definition of 'Gross Margin' according to the KPI documentation?","format_hint":"str"}
